@@ -49,7 +49,9 @@
 		77D57C7628D5E48D008CD32C /* libassimp.5.2.4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libassimp.5.2.4.dylib; path = ../../../../../../usr/local/Cellar/assimp/5.2.5/lib/libassimp.5.2.4.dylib; sourceTree = "<group>"; };
 		77D57C7828D5E785008CD32C /* Mesh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Mesh.h; sourceTree = "<group>"; };
 		77D57C7928D954C0008CD32C /* Model.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Model.h; sourceTree = "<group>"; };
-		77D57C7A28D99F0B008CD32C /* backpack */ = {isa = PBXFileReference; lastKnownFileType = folder; path = backpack; sourceTree = "<group>"; };
+		77E357BB29A4D5960029F808 /* backpack */ = {isa = PBXFileReference; lastKnownFileType = folder; path = backpack; sourceTree = "<group>"; };
+		77E357BF29A4F2E30029F808 /* backpack_f */ = {isa = PBXFileReference; lastKnownFileType = text; path = backpack_f; sourceTree = "<group>"; };
+		77E357C029A4F2E30029F808 /* backpack_v */ = {isa = PBXFileReference; lastKnownFileType = text; path = backpack_v; sourceTree = "<group>"; };
 		77EE8E4D29A3609D00F5F58D /* glad.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = glad.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -88,7 +90,7 @@
 		7760C49128B380CA00F171EE /* opengl2 */ = {
 			isa = PBXGroup;
 			children = (
-				77D57C7A28D99F0B008CD32C /* backpack */,
+				77E357BB29A4D5960029F808 /* backpack */,
 				7760C49228B380CA00F171EE /* main.cpp */,
 				7777FF3A28B475ED005EDAF3 /* Shader.h */,
 				77C4298E28D1CFA00046A706 /* matrix.jpg */,
@@ -104,6 +106,8 @@
 				7785639C28F7A6DA00753A03 /* f_shader */,
 				771A1C842902BA6A00ACB8F4 /* cube_f_shader */,
 				771A1C832902BA5B00ACB8F4 /* cube_v_shader */,
+				77E357BF29A4F2E30029F808 /* backpack_f */,
+				77E357C029A4F2E30029F808 /* backpack_v */,
 				7785639B28F7A6C300753A03 /* v_shader */,
 			);
 			path = opengl2;

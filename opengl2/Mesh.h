@@ -10,6 +10,7 @@
 
 #include <string>
 #include <vector>
+#include <iostream>
 using namespace std;
 
 #define MAX_BONE_INFLUENCE 4
@@ -43,7 +44,7 @@ public:
     vector<Vertex>       vertices;
     vector<unsigned int> indices;
     vector<Texture>      textures;
-    unsigned int VAO;
+    unsigned int VAO_bp;
 
     // constructor
     Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture> textures)
@@ -55,7 +56,7 @@ public:
         // now that we have all the required data, set the vertex buffers and its attribute pointers.
         setupMesh();
     }
-
+    
     // render the mesh
     void Draw(Shader &shader)
     {
@@ -64,6 +65,7 @@ public:
         unsigned int specularNr = 1;
         unsigned int normalNr   = 1;
         unsigned int heightNr   = 1;
+        
         for(unsigned int i = 0; i < textures.size(); i++)
         {
             glActiveTexture(GL_TEXTURE0 + i); // active proper texture unit before binding
@@ -80,13 +82,14 @@ public:
                 number = std::to_string(heightNr++); // transfer unsigned int to string
 
             // now set the sampler to the correct texture unit
-            glUniform1i(glGetUniformLocation(shader.ID, (name + number).c_str()), i);
+            shader.setInt(("material." + name + number).c_str(), i);
+          
             // and finally bind the texture
             glBindTexture(GL_TEXTURE_2D, textures[i].id);
         }
         
         // draw mesh
-        glBindVertexArray(VAO);
+        glBindVertexArray(VAO_bp);
         glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(indices.size()), GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
 
@@ -96,25 +99,23 @@ public:
 
 private:
     // render data
-    unsigned int VBO, EBO;
+    unsigned int VBO_bp, EBO_bp;
 
     // initializes all the buffer objects/arrays
     void setupMesh()
     {
         // create buffers/arrays
-        glGenVertexArrays(1, &VAO);
-        glGenBuffers(1, &VBO);
-        glGenBuffers(1, &EBO);
+        glGenVertexArrays(1, &VAO_bp);
+        glGenBuffers(1, &VBO_bp);
+        glGenBuffers(1, &EBO_bp);
 
-        glBindVertexArray(VAO);
+        glBindVertexArray(VAO_bp);
         // load data into vertex buffers
-        glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        // A great thing about structs is that their memory layout is sequential for all its items.
-        // The effect is that we can simply pass a pointer to the struct and it translates perfectly to a glm::vec3/2 array which
-        // again translates to 3/2 floats which translates to a byte array.
+        glBindBuffer(GL_ARRAY_BUFFER, VBO_bp);
+        
         glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
 
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO_bp);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW);
 
         // set the vertex attribute pointers

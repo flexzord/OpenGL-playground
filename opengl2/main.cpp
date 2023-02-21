@@ -92,6 +92,8 @@ int main()
     // ------------------------------------
     Shader my_shader("v_shader", "f_shader");
     Shader cube_shader("cube_v_shader", "cube_f_shader");
+    Shader backpack_shader("backpack_v", "backpack_f");
+    Model my_model("backpack/backpack.obj");
     
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
@@ -197,7 +199,7 @@ int main()
     unsigned int spec_texture = loadTexture("container2_specular.png");
     
     my_shader.use();
-    my_shader.setInt("texture1", 0);
+    my_shader.setInt("texture_diffuse1", 0);
     cube_shader.use();
     cube_shader.setInt("material.diffuse", 1);
     cube_shader.setInt("material.specular", 2);
@@ -349,6 +351,83 @@ int main()
             cube_shader.setMat4("model", model);
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
+        
+        
+        backpack_shader.use();
+        backpack_shader.setVec3("dirLight.direction", -0.2f, -1.0f, -0.3f);
+        backpack_shader.setVec3("dirLight.ambient", 0.05f, 0.05f, 0.05f);
+        backpack_shader.setVec3("dirLight.diffuse", 0.4f, 0.4f, 0.4f);
+        backpack_shader.setVec3("dirLight.specular", 0.5f, 0.5f, 0.5f);
+        // point light 1
+        backpack_shader.setVec3("pointLights[0].position", pointLightPositions[0]);
+        backpack_shader.setVec3("pointLights[0].ambient", 0.05f, 0.05f, 0.05f);
+        backpack_shader.setVec3("pointLights[0].diffuse", 0.8f, 0.8f, 0.8f);
+        backpack_shader.setVec3("pointLights[0].specular", 1.0f, 1.0f, 1.0f);
+        backpack_shader.setFloat("pointLights[0].constant", 1.0f);
+        backpack_shader.setFloat("pointLights[0].linear", 0.09f);
+        backpack_shader.setFloat("pointLights[0].quadratic", 0.032f);
+        // point light 2
+        backpack_shader.setVec3("pointLights[1].position", pointLightPositions[1]);
+        backpack_shader.setVec3("pointLights[1].ambient", 0.05f, 0.05f, 0.05f);
+        backpack_shader.setVec3("pointLights[1].diffuse", 0.8f, 0.8f, 0.8f);
+        backpack_shader.setVec3("pointLights[1].specular", 1.0f, 1.0f, 1.0f);
+        backpack_shader.setFloat("pointLights[1].constant", 1.0f);
+        backpack_shader.setFloat("pointLights[1].linear", 0.09f);
+        backpack_shader.setFloat("pointLights[1].quadratic", 0.032f);
+        // point light 3
+        backpack_shader.setVec3("pointLights[2].position", pointLightPositions[2]);
+        backpack_shader.setVec3("pointLights[2].ambient", 0.05f, 0.05f, 0.05f);
+        backpack_shader.setVec3("pointLights[2].diffuse", 0.8f, 0.8f, 0.8f);
+        backpack_shader.setVec3("pointLights[2].specular", 1.0f, 1.0f, 1.0f);
+        backpack_shader.setFloat("pointLights[2].constant", 1.0f);
+        backpack_shader.setFloat("pointLights[2].linear", 0.09f);
+        backpack_shader.setFloat("pointLights[2].quadratic", 0.032f);
+        // point light 4
+        backpack_shader.setVec3("pointLights[3].position", pointLightPositions[3]);
+        backpack_shader.setVec3("pointLights[3].ambient", 0.05f, 0.05f, 0.05f);
+        backpack_shader.setVec3("pointLights[3].diffuse", 0.8f, 0.8f, 0.8f);
+        backpack_shader.setVec3("pointLights[3].specular", 1.0f, 1.0f, 1.0f);
+        backpack_shader.setFloat("pointLights[3].constant", 1.0f);
+        backpack_shader.setFloat("pointLights[3].linear", 0.09f);
+        backpack_shader.setFloat("pointLights[3].quadratic", 0.032f);
+        // spotLight
+        
+        if(isOn==false){
+            backpack_shader.setVec3("spotLight.position", 0.0f, -20.0f, 0.0f);
+            backpack_shader.setVec3("spotLight.direction", camera.Front);
+            backpack_shader.setVec3("spotLight.ambient", 0.0f, 0.0f, 0.0f);
+            backpack_shader.setVec3("spotLight.diffuse", 1.0f, 1.0f, 1.0f);
+            backpack_shader.setVec3("spotLight.specular", 1.0f, 1.0f, 1.0f);
+            backpack_shader.setFloat("spotLight.constant", 1.0f);
+            backpack_shader.setFloat("spotLight.linear", 0.09f);
+            backpack_shader.setFloat("spotLight.quadratic", 0.032f);
+            backpack_shader.setFloat("spotLight.cutOff", glm::cos(glm::radians(12.5f)));
+            backpack_shader.setFloat("spotLight.outerCutOff", glm::cos(glm::radians(15.0f)));
+            
+        }
+        if(isOn==true){
+            backpack_shader.setVec3("spotLight.position", camera.Position);
+            backpack_shader.setVec3("spotLight.direction", camera.Front);
+            backpack_shader.setVec3("spotLight.ambient", 0.0f, 0.0f, 0.0f);
+            backpack_shader.setVec3("spotLight.diffuse", 1.0f, 1.0f, 1.0f);
+            backpack_shader.setVec3("spotLight.specular", 1.0f, 1.0f, 1.0f);
+            backpack_shader.setFloat("spotLight.constant", 1.0f);
+            backpack_shader.setFloat("spotLight.linear", 0.09f);
+            backpack_shader.setFloat("spotLight.quadratic", 0.032f);
+            backpack_shader.setFloat("spotLight.cutOff", glm::cos(glm::radians(12.5f)));
+            backpack_shader.setFloat("spotLight.outerCutOff", glm::cos(glm::radians(15.0f)));
+            
+        }
+        backpack_shader.setVec3("viewPos", camera.Position);
+        backpack_shader.setFloat("material.shininess", 32.0f);
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(0.0f, 0.0f, -2.5f));
+        model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));
+        backpack_shader.setMat4("model", model);
+        backpack_shader.setMat4("view", view);
+        backpack_shader.setMat4("projection", projection);
+        my_model.Draw(backpack_shader);
+        
         
         
         
